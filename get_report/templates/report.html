@@ -1,0 +1,126 @@
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+</head>
+
+<body>
+            <div class="general-container">
+                <div class="container top-container" style="padding-top: 1%;">
+                    <div class="row" style="margin-left: auto">
+                        <div class="col-sm-6 col-lg-12">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                          <a class="nav-link active css" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Самая популярная страна</a>
+                                        </li>
+                                        <li class="nav-item">
+                                          <a class="nav-link css" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Страна интересующаяся определеными категориями</a>
+                                        </li>
+                                        <li class="nav-item">
+                                          <a class="nav-link css" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">В какое время суток люди интересуются товаром</a>
+                                        </li>
+                                      </ul>
+                                      <div class="tab-content" id="pills-tabContent">
+        <!--ввод-->                  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            
+                                <form id='top_country' method='POST'>
+                                {% csrf_token %}
+                                <div class="col-sm-3" style="margin-bottom: 20;padding-left: 0px;">
+                                        <label style="font-size: 13px;">Количество стран для вывода</label>
+                                        <input min="0" type="number" class="form-control" name="count" id="count" placeholder="До" pattern="\d*">
+                                </div>
+                                {% buttons %}
+                                <button type='submit' form = "top_country" class="btn btn-primary">Отправить</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Помощь
+                                      </button>
+                                {% endbuttons %}
+                                </form>
+        <!--ввод-->            </div>
+        <!--Load file-->    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <form id='category_country' method='POST'>
+                                {% csrf_token %}
+                                <div class="col-sm-3" style="margin-bottom: 20;padding-left: 0px;">
+                                        <div>
+                                            <label style="font-size: 13px;">Выберите категорию товара</label>
+                                        </div>
+                                        <select class="selectpicker" name="category" id="category" >
+                                                <option value="5">semi_manufactures</option>
+                                                <option value="4">caviar</option>
+                                                <option value="3">canned_food</option>
+                                                <option value="2">fresh_fish</option>
+                                                <option value="1">frozen_fish</option>
+                                        </select>
+                                </div>
+                                {% buttons %}
+                                <button type='submit' form = "category_country" class="btn btn-primary">Отправить</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Помощь
+                                      </button>
+                                {% endbuttons %}
+                                </form>
+        <!--end load-->     </div>
+        <!--задача-->          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <form id='times_of_day' method='POST'>
+                        {% csrf_token %}
+                        <div class="col-sm-3" style="margin-bottom: 20;padding-left: 0px;">
+                                <div>
+                                    <label style="font-size: 13px;">Выберите категорию товара</label>
+                                </div>
+                                <select class="selectpicker" name="category" id="category" >
+                                        <option value="5">semi_manufactures</option>
+                                        <option value="4">caviar</option>
+                                        <option value="3">canned_food</option>
+                                        <option value="2">fresh_fish</option>
+                                        <option value="1">frozen_fish</option>
+                                </select>
+                        </div>
+                        {% buttons %}
+                        <button type='submit' form = "times_of_day" class="btn btn-primary">Отправить</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Помощь
+                              </button>
+                        {% endbuttons %}
+                        </form>
+        <!--задача-->          </div>
+                          </div>
+                          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Справка</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Вкладка "Самая популярная страна" отвечает на вопрос:<br>
+                                      "Посетители из какой страны совершают больше всего действий на сайте?"<br></p>
+                                      <p>Вкладка "Страна интересующаяся определеными категориями" отвечает на вопрос:<br>
+                                      "Посетители из какой страны чаще всего интересуются товарами из определенных категорий?"<br></p>
+                                    <p>Вкладка "В какое время суток люди интересуются товаром" отвечает на вопрос:<br>
+                                      "В какое время суток чаще всего просматривают определенную категорию товаров?"<br></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        <div class="table-content">
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="{% static 'scripts.js' %}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>       
+</body>
+</html>
